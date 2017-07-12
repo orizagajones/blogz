@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:blogroot@localhost:8889/build-a-blog'
@@ -43,7 +44,7 @@ def require_login():
         return redirect('/login')
 
 
-#write a function that allows a user to login & go to their blog page - if not send them back to login
+#write a function that allows a user to login & go to their blog page
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
@@ -76,28 +77,31 @@ def register():
             session['email'] = email
             return redirect('/')
         else:
-            return '<h1>Duplicate user</h1>'
+            flash('This username is already taken', 'error')
 
     return render_template('register.html')
 
 
+#a function to let you logout
 @app.route('/logout')
 def logout():
     del session['email']
     return redirect('/')
 
 
-@app.route('/blog') #this route should list blogs via get method
+#this route should list blogs via get method - as in the base.html file
+@app.route('/blog') 
 def list_blogs():
 
     owner = User.query.filter_by(email=session['email']).first()
     blogs = Blog.query.filter_by(owner=owner).all()
     blog_title = request.form['title']
 
-    return redirect('/blog')
+    return render_template('blog.html')
 
 
-@app.route('/newpost', methods=['POST', 'GET']) #this route will let you post a blog
+#a function to allow the user to post a blog
+@app.route('/newpost', methods=['POST', 'GET']) 
 def post_blog():
      
     owner = User.query.filter_by(email=session['email']).first()
