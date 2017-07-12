@@ -1,0 +1,59 @@
+html {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-right: 75px;
+    margin-left: 75px;
+    padding: 5;
+}
+
+body {
+    font-size: 16px;
+    font-family: Arimo;
+    color: #000000;
+    text-align: left;
+}
+
+h1 {
+    font-size: 40px;
+    font-family: Quando;
+    color: #808080;
+    text-align: left;
+}
+
+h2 {
+    font-size: 30px;
+    font-family: Quando;
+    color: #888888;
+    text-align: left;
+}
+
+.error {
+        font-size: 18px;
+        font-family: Arimo;
+        font-style: bold;
+        color: coral
+    }
+
+.topnav {
+    background-color:coral;
+    overflow: hidden;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: #ffffff;
+    font-style: bold;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.topnav a:hover {
+    color: black;
+}
+
+.topnav a.active {
+    color: white;
+}

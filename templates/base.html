@@ -2,17 +2,16 @@
 <html>
     <head>
         <title>{{Title}}</title>
-        <style>
-            .error {
-                color: red;
-            }
-        </style>
+        <link href='https://fonts.googleapis.com/css?family=Quando'rel='stylesheet' />
+        <link href='https://fonts.googleapis.com/css?family=Arimo'rel='stylesheet' />
+        <link rel='stylesheet' type='text/css' href='/styles.css' />
     </head>
     <body>
-
-        <div>
+        <nav>
+            <a href='/blog'>List o' blogs</a>
+            <a href='/newpost'>Post new blog</a>
             <a href="/logout">Logout</a>
-        </div>
+        </nav>
 
         {% with messages = get_flashed_messages(with_categories=True) %}
             <ul>
