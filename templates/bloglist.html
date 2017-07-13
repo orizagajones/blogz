@@ -12,11 +12,12 @@
 
             {% for blog in blogs %}
             <h3> 
-                <a href='/thisblog/{{ blog.id }}'>{{ blog.title }}</a>
+                <a href='/bloglist/{{ blog.id }}'>{{ blog.title }}</a>
             </h3> 
             <p>
                 {{ blog.body }}
             </p>
+        
             {% endfor %}     
 
     {% endif %}
