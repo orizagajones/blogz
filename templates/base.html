@@ -4,11 +4,11 @@
         <title>{{Title}}</title>
         <link href='https://fonts.googleapis.com/css?family=Quando'rel='stylesheet' />
         <link href='https://fonts.googleapis.com/css?family=Arimo'rel='stylesheet' />
-        <link rel='stylesheet' type='text/css' href='/styles.css' />
+        <link rel='stylesheet' type='text/css' href='{{ url_for('static', filename='css/styles.css') }}' />
     </head>
     <body>
         <nav>
-            <a href='/blog'>List o' blogs</a>
+            <a href='/'>List o' blogs</a>
             <a href='/newpost'>Post new blog</a>
             <a href="/logout">Logout</a>
         </nav>

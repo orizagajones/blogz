@@ -3,17 +3,16 @@
 {% block content %}
 
 <h1>Get writing!</h1>
-<form method='post'>
+<form method='post' action='/newpost'>
     <table>
         <tr>
             <td><label for='title'>Title</label></td>
             <td>
                 <input type='text' name='title' />
             </td>
+            <hr>
             <td></label for='body'>Body</label></td>
-            <td>
-                <input type='textarea' name='body'/>
-            </td>
+            <td><textarea name='body' rows='6' cols='40'></textarea></td>
         </tr>            
     </table>
     <input type='submit' value='post blog' />

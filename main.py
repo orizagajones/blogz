@@ -1,3 +1,5 @@
+#I need a docstring here, apparently.
+
 from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 
@@ -12,7 +14,7 @@ app.secret_key = '1234567890'
 #create a new class that can be managed by sqlalchemy & store blogs in a db
 class Blog(db.Model):
 
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.String(500))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -54,7 +56,7 @@ def login():
         if user and user.password == password:
             session['email'] = email
             flash('Logged in')
-            return redirect('/blog')
+            return redirect('/')
         else:
             flash('User password incorrect, or user does not exist', 'error')
 
@@ -89,48 +91,31 @@ def logout():
     return redirect('/')
 
 
-#this route should list blogs via get method - as in the base.html file
-@app.route('/blog') 
-def list_blogs():
-
-    owner = User.query.filter_by(email=session['email']).first()
-    blogs = Blog.query.filter_by(owner=owner).all()
-    blog_title = request.form['title']
-
-    return render_template('blog.html')
-
-
 #a function to allow the user to post a blog
 @app.route('/newpost', methods=['POST', 'GET']) 
 def post_blog():
-     
-    owner = User.query.filter_by(email=session['email']).first()
 
     if request.method == 'POST':
-        blog_title = request.form['title'] #check again if this should say 'name' instead of 'title'
+        blog_title = request.form['title']
         blog_body = request.form['body']
-        new_blog = Blog(blog_title, blog_body, owner)
-        db.session.add(new_blog)
+        owner = User.query.filter_by(email=session['email']).first()
+        new_entry = Blog(blog_title, blog_body, owner)
+        db.session.add(new_entry)
         db.session.commit()
 
-    blogs = Blog.query.filter_by(owner=owner).all()
+        return redirect('/')
 
-    return render_template('newpost.html')
+    else:
+        return render_template('newpost.html')
 
 
-@app.route('/', methods=['POST', 'GET'])
-def index():
+@app.route('/')
+def list_blogs():
 
-    owner = User.query.filter_by(email=session['email']).first() 
-    
-    if request.method == 'POST':   #if request is a post (if it came from submitting the form)
-        blog_name = request.form['blog']   #then we want to grab the data out of the user's input 
-        new_blog = Blog(blog_name, owner)  #create new Blog object 
-        db.session.add(new_blog) #add it to future commits
-        db.session.commit()   #commit to database as a persistent object
-
+    owner = User.query.filter_by(email=session['email']).first()
     blogs = Blog.query.filter_by(owner=owner).all() #owner=owner specifies that this blog belongs to this user(owner)
-    return render_template('blog.html', title='Get writing!', blogs=blogs)
+    
+    return render_template('bloglist.html', title='Get writing!', blogs=blogs)
 
 
 if __name__ == '__main__':
