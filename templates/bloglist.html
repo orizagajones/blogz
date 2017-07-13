@@ -12,7 +12,7 @@
 
             {% for blog in blogs %}
             <h3> 
-                <a href='/thisblog'>{{ blog.title }}</a>
+                <a href='/thisblog/{{ blog.id }}'>{{ blog.title }}</a>
             </h3> 
             <p>
                 {{ blog.body }}

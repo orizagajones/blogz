@@ -115,6 +115,12 @@ def post_blog():
     else:
         return render_template('newpost.html')
 
+@app.route('/thisblog')
+def view_thisblog():
+    thisblog = Blog.query.filter_by(id=id).first()
+
+    return render_template('thisblog.html')
+
 
 @app.route('/')
 def list_blogs():
