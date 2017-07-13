@@ -98,12 +98,19 @@ def post_blog():
     if request.method == 'POST':
         blog_title = request.form['title']
         blog_body = request.form['body']
-        owner = User.query.filter_by(email=session['email']).first()
-        new_entry = Blog(blog_title, blog_body, owner)
-        db.session.add(new_entry)
-        db.session.commit()
 
-        return redirect('/')
+        if blog_title == '' or blog_body == '':
+            flash('Please fill out both fields before submitting.', 'error')
+            
+            return redirect('/newpost')
+        
+        else:
+            owner = User.query.filter_by(email=session['email']).first()
+            new_entry = Blog(blog_title, blog_body, owner)
+            db.session.add(new_entry)
+            db.session.commit()
+
+            return redirect('/')
 
     else:
         return render_template('newpost.html')
