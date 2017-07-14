@@ -118,11 +118,10 @@ def post_blog():
 
 @app.route('/thisblog')
 def view_thisblog():
-    owner = User.query.filter_by(email=session['email']).first()
-    blog_id = request.args.get(id)
-    thisblog = Blog.query.filter_by(blog_id=id).first() #SELECT the blog (object) WHERE the id is the same as the one being selected FROM database
-
-    return render_template('thisblog.html')
+    blog_id = request.args.get('id')
+    if blog_id: 
+        thisblog = Blog.query.filter_by(id=blog_id).first()
+        return render_template('thisblog.html', blog=thisblog)
 
 
 @app.route('/')
