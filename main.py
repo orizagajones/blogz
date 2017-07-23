@@ -93,6 +93,31 @@ def logout():
     return redirect('/')
 
 
+@app.route('/thisblog')
+def view_thisblog():
+    blog_id = request.args.get('id')
+    if blog_id: 
+        thisblog = Blog.query.filter_by(id=blog_id).first()
+        return render_template('thisblog.html', blog=thisblog)
+
+
+@app.route('/')
+def list_blogs():
+
+    owner = User.query.filter_by(email=session['email']).first()
+    blogs = Blog.query.filter_by(owner=owner).all() #owner=owner specifies that this blog belongs to this user(owner)
+    
+    return render_template('bloglist.html', title='Get writing!', blogs=blogs)
+
+
+#a function to order of the blogs by primary key
+def sort_blogs():
+    
+    all = Blog.query.get('id')
+    list = all.sort()
+    return render_template('thisblog.html', list)
+
+
 #a function to allow the user to post a blog
 @app.route('/newpost', methods=['POST', 'GET']) 
 def post_blog():
@@ -112,33 +137,10 @@ def post_blog():
             db.session.add(new_entry)
             db.session.commit()
 
-            return redirect('/')
+            return render_template('thisblog.html', blog=new_entry)
 
     else:
         return render_template('newpost.html')
-
-
-@app.route('/thisblog')
-def view_thisblog():
-    blog_id = request.args.get('id')
-    if blog_id: 
-        thisblog = Blog.query.filter_by(id=blog_id).first()
-        return render_template('thisblog.html', blog=thisblog)
-
-
-@app.route('/')
-def list_blogs():
-
-    owner = User.query.filter_by(email=session['email']).first()
-    blogs = Blog.query.filter_by(owner=owner).all() #owner=owner specifies that this blog belongs to this user(owner)
-    
-    return render_template('bloglist.html', title='Get writing!', blogs=blogs)
-
-def sort_blogs():
-    
-    all = Blog.query.get('id')
-    list = all.sort()
-    return render_template('thisblog.html', list)
 
 if __name__ == '__main__':
     app.run()
