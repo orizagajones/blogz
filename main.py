@@ -1,4 +1,4 @@
-#I need a docstring here, apparently.
+'''This is a blog app that allows users to publish and view blog entries'''
 
 from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -57,8 +57,10 @@ def login():
             session['email'] = email
             flash('Logged in')
             return redirect('/')
-        else:
-            flash('User password incorrect, or user does not exist', 'error')
+        if user and user.password != password:
+            flash('User password incorrect', 'error')
+        if not user:
+            flash('User does not exist', 'error')
 
     return render_template('login.html')
 
