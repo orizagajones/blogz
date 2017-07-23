@@ -132,6 +132,11 @@ def list_blogs():
     
     return render_template('bloglist.html', title='Get writing!', blogs=blogs)
 
+def sort_blogs():
+    
+    all = Blog.query.get('id')
+    list = all.sort()
+    return render_template('thisblog.html', list)
 
 if __name__ == '__main__':
     app.run()
