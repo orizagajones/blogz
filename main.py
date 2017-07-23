@@ -74,16 +74,25 @@ def register():
         verify = request.form['verify']
 
         existing_user = User.query.filter_by(email=email).first()
+        
         if not existing_user:
-            new_user = User(email, password)
-            db.session.add(new_user)
-            db.session.commit()
-            session['email'] = email
-            return redirect('/')
-        else:
-            flash('This username is already taken', 'error')
 
-    return render_template('register.html')
+            if len(password)< 3 or len(email)< 3:
+                flash('Please use a password that is at least 3 characters long', 'error')
+                return render_template('register.html')
+            elif verify != password:
+                flash('Please make sure passwords match', 'error')
+                return render_template('register.html')
+            else:
+                new_user = User(email, password)
+                db.session.add(new_user)
+                db.session.commit()
+                session['email'] = email
+                return redirect('/')
+        else:   
+            flash('This username is already taken', 'error')
+    
+    return render_template('register.html') #keep this here as the main route
 
 
 #a function to let you logout
@@ -101,14 +110,25 @@ def view_thisblog():
         return render_template('thisblog.html', blog=thisblog)
 
 
-@app.route('/')
-def list_blogs():
+@app.route('/bloglist')
+def list_all_blogs():  #lists all blogs by all authors
 
-    owner = User.query.filter_by(email=session['email']).first()
-    blogs = Blog.query.filter_by(owner=owner).all() #owner=owner specifies that this blog belongs to this user(owner)
-    
-    return render_template('bloglist.html', title='Get writing!', blogs=blogs)
+    blogs = Blog.query.all()
+    return render_template('bloglist.html', title='All blogs', blogs=blogs)
 
+#save this function for later - need to display blogs by a single user 
+#(logged in user here)
+#def list_my_blogs():
+
+    #owner = User.query.filter_by(email=session['email']).first()
+    #blogs = Blog.query.filter_by(owner=owner).all() #owner=owner specifies that this blog belongs to this user(owner)
+    #return render_template('bloglist.html', title='Get writing!', blogs=blogs)
+
+@app.route('/index')
+#index page will list all blog authors with names linked
+def index():
+    authors = User.query.all()
+    return render_template('index.html', title='All users', user=authors)
 
 #a function to order of the blogs by primary key
 def sort_blogs():
