@@ -4,19 +4,21 @@
 
 <h2>View blogs by author</h2>
 
-{% if authors|length == 0 %}
+{% if users|length == 0 %}
 <h3>There are no users yet. Be the first!</h3>
 
 {% else %}
 
-    {% for author in authors %}
+    {% for user in users %}
 
         <ul>
-            <li>{{ user.email }}</li>
+            <li><a href='/singleuser?id={{ user.id }}'>{{ user.email }}</a></li>
         </ul>
             
     {% endfor %}  
 
 {% endif %}
+
+
 
 {% endblock %}

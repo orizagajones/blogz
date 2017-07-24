@@ -41,7 +41,7 @@ class User(db.Model):
 #write a function that requires login before accessing the blog & newpost pages
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'register']
+    allowed_routes = ['login', 'register', 'bloglist', 'index']
     if request.endpoint not in allowed_routes and 'email' not in session:
         return redirect('/login')
 
@@ -114,21 +114,25 @@ def view_thisblog():
 def list_all_blogs():  #lists all blogs by all authors
 
     blogs = Blog.query.all()
-    return render_template('bloglist.html', title='All blogs', blogs=blogs)
+    users = User.query.all()
+    return render_template('bloglist.html', title='All blogs', blogs=blogs, users=users)
 
-#save this function for later - need to display blogs by a single user 
-#(logged in user here)
-#def list_my_blogs():
 
-    #owner = User.query.filter_by(email=session['email']).first()
-    #blogs = Blog.query.filter_by(owner=owner).all() #owner=owner specifies that this blog belongs to this user(owner)
-    #return render_template('bloglist.html', title='Get writing!', blogs=blogs)
+#to display blogs by a single user 
+def single_user():
 
-@app.route('/index')
+    user = request.args.get('id')
+    if user:
+        blogs = Blog.query.filter_by(owner=owner).all() #owner=owner specifies that this blog belongs to this user(owner)
+        return render_template('bloglist.html', blogs=blogs)
+
+
 #index page will list all blog authors with names linked
+@app.route('/', methods=['POST', 'GET'])
 def index():
-    authors = User.query.all()
-    return render_template('index.html', title='All users', user=authors)
+    users = User.query.all()
+    return render_template('index.html', title='All users', users=users)
+
 
 #a function to order of the blogs by primary key
 def sort_blogs():

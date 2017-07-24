@@ -15,12 +15,17 @@
                 <a href='/thisblog?id={{ blog.id }}'>{{ blog.title }}</a>
             </h3> 
             <p>
-                <em>written by {{ blog.owner_id }}</em>
-            </p>
-            <p>
                 {{ blog.body }}
+
             </p>
-        
+                {% for user in users %}
+                    {% if user.id == blog.owner_id %}
+                        <p>
+                            <em>written by <a href="/singleuser?user={{ user.id }}">{{ blog.owner.email }}</a></em>
+                        </p>
+                    {% endif %}
+                {% endfor %}
+
             {% endfor %}     
 
     {% endif %}
