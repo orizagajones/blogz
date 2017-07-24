@@ -124,6 +124,7 @@ def singleuser():
 
     user = request.args.get('id')
     if user:        
+        #owner = User.query.filter_by(email= request.form['email']).first()
         blogs = Blog.query.all()   
         return render_template('singleuser.html', user=user, blogs=blogs)
 

@@ -6,12 +6,12 @@
 
     <h1>Blogs by {{ user.email }}</h1>
 
-    {% if user.blogs|length == 0 %}
+    {% if blogs|length == 0 %}
         <h2>{{ user.email }} hasn't written anything yet.</h2>
 
     {% else %}
 
-        {% for blog in user.blogs %}
+        {% for blog in blogs %}
             <h3> 
                 <a href='/thisblog?id={{ blog.id }}'>{{ blog.title }}</a>
             </h3> 
