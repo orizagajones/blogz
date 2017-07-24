@@ -6,4 +6,6 @@
 
 <p>{{ blog.body }}</p>
 
+<em>written by <a href="/singleuser?user={{ blog.owner.id }}">{{ blog.owner.email }}</a></em>
+
 {% endblock %}

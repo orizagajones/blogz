@@ -110,7 +110,7 @@ def view_thisblog():
         return render_template('thisblog.html', blog=thisblog)
 
 
-@app.route('/bloglist')
+@app.route('/bloglist', methods=['POST', 'GET'])
 def list_all_blogs():  #lists all blogs by all authors
 
     blogs = Blog.query.all()
@@ -119,12 +119,13 @@ def list_all_blogs():  #lists all blogs by all authors
 
 
 #to display blogs by a single user 
-def single_user():
+def singleuser():
 
     user = request.args.get('id')
     if user:
-        blogs = Blog.query.filter_by(owner=owner).all() #owner=owner specifies that this blog belongs to this user(owner)
-        return render_template('bloglist.html', blogs=blogs)
+        #owner = User.query.filter_by(email=user.email).first()
+        #blogs = Blog.query.filter_by(owner=owner).all()   #owner=owner specifies that this blog belongs to this user(owner)
+        return render_template('singleuser.html', user=user) #, blogs=blogs?
 
 
 #index page will list all blog authors with names linked

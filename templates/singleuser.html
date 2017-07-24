@@ -3,23 +3,25 @@
 {% block content %}
 
 
-    <h1>Blogs by {{ blog.owner.email }}</h1>
+    <h1>Blogs by {{ user.email }}</h1>
 
-    {% if blogs|length == 0 %}
-    <h2>{{ blog.owner.email }} hasn't written anything yet.</h2>
+    {% if user.blogs|length == 0 %}
+    <h2>{{ user.email }} hasn't written anything yet.</h2>
 
     {% else %}
 
-            {% for blog in blogs %}
+        {% for blog in user.blogs %}
             <h3> 
-                <a href='/bloglist?user=userId{{ blog.id }}'>{{ blog.title }}</a>
+                <a href='/thisblog?id={{ blog.id }}'>{{ blog.title }}</a>
             </h3> 
             <p>
                 {{ blog.body }}
             </p>
         
-            {% endfor %}     
+        {% endfor %}     
 
     {% endif %}
+
+
 
 {% endblock %}
