@@ -12,7 +12,7 @@
     {% for user in users %}
 
         <ul>
-            <li><a href='/bloglist?id={{ blog.owner.id }}'>{{ blog.owner.email }}</a></li>
+            <li><a href='/singleuser?id={{ user.id }}'>{{ user.email }}</a></li>
         </ul>
             
     {% endfor %}  
