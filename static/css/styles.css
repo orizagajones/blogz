@@ -6,12 +6,21 @@ html {
     padding: 5;
 }
 
-body {
+.main {
     font-size: 20px;
     font-family: Arimo;
-    color: #000000;
+    color: #00008B;
     text-align: left;
 }
+
+a {
+    color: #00008B;
+}
+
+a.hover {
+    color: coral;
+}
+
 
 h1 {
     font-size: 40px;
@@ -40,7 +49,7 @@ h2 {
 }
 
 .topnav a {
-    float: left;
+    float: center;
     display: block;
     color: #ffffff;
     font-style: bold;
@@ -52,10 +61,14 @@ h2 {
     overflow: hidden;
 }
 
-.topnav a:hover {
+.topnav a.hover {
     color: black;
 }
 
 .topnav a.active {
     color: white;
+}
+
+.background {
+    url("https://images.pexels.com/photos/51159/letter-handwriting-family-letters-written-51159.jpeg?w=940&h=650&auto=compress&cs=tinysrgb") no-repeat;
 }

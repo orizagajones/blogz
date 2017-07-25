@@ -7,14 +7,21 @@
         <link rel='stylesheet' type='text/css' href='{{ url_for('static', filename='css/styles.css') }}' />
     </head>
     <body>
-        <nav>
-            <a href='/'>Home</a>
-            <a href='/bloglist'>List o' blogs</a>
-            <a href='/bloglist'>Sort list</a>
-            <a href='/newpost'>Post new blog</a>
-            <a href="/logout">Logout</a>
-        </nav>
+        <div class="background">
+            <div></div>
+            <div class="topnav">    
+            <nav>
+                <a href='/'>Home</a>
+                <a href='/bloglist'>List o' blogs</a>
+                <a href='/bloglist'>Sort list</a>
+                <a href='/newpost'>Post new blog</a>
+                <a href="/logout">Logout</a>
+            </nav>
+        </div>
+        </div>
+        
 
+        <div class="main">
         {% with messages = get_flashed_messages(with_categories=True) %}
             <ul>
             {% for category, message in messages %}
@@ -25,6 +32,6 @@
 
         {% block content %}
         {% endblock %}
-
+        </div>
     </body>
 </html>

@@ -31,7 +31,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(120))
-    blogs = db.relationship('Blog', backref='owner')
+    blogs = db.relationship('Blog', backref='owner')   #blogs is a relationship object
 
     def __init__(self, email, password):
         self.email = email
@@ -117,16 +117,12 @@ def list_all_blogs():  #lists all blogs by all authors
     users = User.query.all()
     return render_template('bloglist.html', title='All blogs', blogs=blogs, users=users)
 
+def singleuser():     #to display blogs by a single user
 
-#to display blogs by a single user 
-@app.route('/singleuser')
-def singleuser():
-
-    user = request.args.get('id')
-    if user:        
-        #owner = User.query.filter_by(email= request.form['email']).first()
-        blogs = Blog.query.all()   
-        return render_template('singleuser.html', user=user, blogs=blogs)
+    userid = request.args.get['user']
+    if userid:
+        userblogs = Blog.query.filter_by(owner_id=userid).all()
+        return render_template('singleuser.html', userblogs=userblogs)
 
 
 #index page will list all blog authors with names linked
@@ -140,7 +136,7 @@ def index():
 def sort_blogs():
     
     all = Blog.query.get('id')
-    list = all.sort()
+    list = all.sort(reverse=False)
     return render_template('thisblog.html', list)
 
 
