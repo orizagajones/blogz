@@ -136,7 +136,7 @@ def index():
 def sort_blogs():
     
     all = Blog.query.get('id')
-    list = all.sort(reverse=False)
+    list = all.sort()
     return render_template('thisblog.html', list)
 
 
